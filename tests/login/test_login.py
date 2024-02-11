@@ -27,10 +27,7 @@ def test_user_login(user_login_fixture, login, password, expect_login):
         time.sleep(3)
         message = user_login_fixture.find_element_by_id("com.ajaxsystems:id/addFirstHub")
         assert message.is_displayed()
-        logger.info("Login successful.")
-        logger.info("Starting to sign out.")
         user_login_fixture.sign_out()
-        logger.info("Sign out successful.")
     elif expect_login == "Wrong login or password":
         error_message = user_login_fixture.find_element_by_id("com.ajaxsystems:id/snackbar_text")
         assert error_message.is_displayed()

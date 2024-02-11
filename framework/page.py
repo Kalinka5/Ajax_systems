@@ -1,9 +1,11 @@
 import time
 
 from appium.webdriver import Remote
+from logger_init import logger
 
 
 class Page:
+    """Class of basic functional in the Ajax app."""
 
     def __init__(self, driver: Remote):
         self.driver = driver
@@ -31,10 +33,12 @@ class Page:
         el.send_keys(input_value)
 
     def sign_out(self):
+        logger.info("Start to sign out of account.")
         menu = self.driver.find_element_by_id("com.ajaxsystems:id/menuDrawer")
         self.click_element(menu)
         settings = self.driver.find_element_by_id("com.ajaxsystems:id/settings")
         self.click_element(settings)
         sign_out = self.driver.find_element_by_xpath('(//androidx.compose.ui.platform.ComposeView[@resource-id="com.ajaxsystems:id/compose_view"])[6]/android.view.View/android.view.View[1]')
         self.click_element(sign_out)
+        logger.info("Sign out was successful.")
         time.sleep(3)

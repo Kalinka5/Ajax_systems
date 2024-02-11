@@ -1,17 +1,21 @@
 from selenium.common.exceptions import NoSuchElementException
 
 from .login_page import LoginPage
+from logger_init import logger
 
 
 class SideBar(LoginPage):
+    """Class of elements in sidebar. This class used to find some elements in a sidebar when user is logged in."""
 
     def __init__(self, driver):
         super().__init__(driver)
 
     def click_menu_button(self):
+        # If user doesn't see the menu button, it will skip it
         try:
             menu = self.find_element_by_id('com.ajaxsystems:id/menuDrawer')
             menu.click()
+            logger.info("\"Menu\" button was clicked.")
         except NoSuchElementException:
             pass
 
@@ -57,12 +61,16 @@ class SideBar(LoginPage):
 
     def click_settings_button(self):
         self.settings_button().click()
+        logger.info("\"Settings\" button was clicked.")
 
     def click_help_button(self):
         self.help_button().click()
+        logger.info("\"Help\" button was clicked.")
 
     def click_report_button(self):
         self.report_button().click()
+        logger.info("\"Report\" button was clicked.")
 
     def click_add_hub_button(self):
         self.add_hub_button().click()
+        logger.info("\"Add Hub\" button was clicked.")
