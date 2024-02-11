@@ -12,8 +12,16 @@ class Page:
         el = self.driver.find_element_by_id(id)
         return el
 
+    def find_element_by_accessibility_id(self, access_id: str):
+        el = self.driver.find_element_by_accessibility_id(access_id)
+        return el
+
     def find_element_by_xpath(self, xpath: str):
         el = self.driver.find_element_by_xpath(xpath)
+        return el
+
+    def find_element_by_class(self, class_name: str):
+        el = self.driver.find_element_by_class_name(class_name)
         return el
 
     def click_element(self, el):

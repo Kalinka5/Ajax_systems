@@ -31,3 +31,10 @@ class LoginPage(Page):
     def login(self):
         el = self.find_element_by_xpath('//android.widget.TextView[@resource-id="com.ajaxsystems:id/text" and @text="Log In"]')
         self.click_element(el)
+
+    def full_login_into_account(self):
+        self.click_on_login_button()
+        self.fill_email_input("qa.ajax.app.automation@gmail.com")
+        self.fill_password_input("qa_automation_password")
+        self.login()
+        time.sleep(3)

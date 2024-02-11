@@ -1,10 +1,7 @@
 import pytest
-
-import logging
 import time
 
-
-logger = logging.getLogger(__name__)
+from logger_init import logger
 
 
 @pytest.mark.parametrize("login, password, expect_login", [
