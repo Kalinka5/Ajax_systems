@@ -1,16 +1,4 @@
 def android_get_desired_capabilities():
-    # I used these capabilities to make tests on my device.
-    # {
-    #     "appium:autoGrantPermissions": true,
-    #     "appium:automationName": "uiautomator2",
-    #     "appium:newCommandTimeout": 500,
-    #     "appium:noSign": true,
-    #     "platformName": "Android",
-    #     "appium:resetKeyboard": true,
-    #     "appium:takesScreenshot": true,
-    #     "appium:appPackage": "com.ajaxsystems",
-    #     "appium:appActivity": "com.ajaxsystems.ui.activity.LauncherActivity"
-    # }
     return {
         'autoGrantPermissions': True,
         'automationName': 'uiautomator2',

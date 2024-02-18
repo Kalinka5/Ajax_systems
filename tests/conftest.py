@@ -21,6 +21,5 @@ def run_appium_server():
 
 @pytest.fixture(scope='session')
 def driver(run_appium_server):
-    # I used http://localhost:4723 url
     driver = webdriver.Remote('http://localhost:4723/wd/hub', android_get_desired_capabilities())
     yield driver

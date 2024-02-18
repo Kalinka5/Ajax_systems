@@ -1,6 +1,6 @@
-from selenium.common.exceptions import NoSuchElementException
+from appium.webdriver import Remote
 
-import time
+from selenium.common.exceptions import NoSuchElementException
 
 from .page import Page
 from logger_init import logger
@@ -9,41 +9,58 @@ from logger_init import logger
 class LoginPage(Page):
     """Class of elements in login page. This class used to find some elements in a login page."""
 
-    def __init__(self, driver):
+    def __init__(self, driver: Remote):
         super().__init__(driver)
-
-    def click_on_login_button(self):
-        # If user doesn't see the login button, it will skip it
-        try:
-            el = self.find_element_by_xpath('//android.widget.TextView[@resource-id="com.ajaxsystems:id/text" and @text="Log In"]')
-            self.click_element(el)
-            logger.info("\"Log in\" button in the main menu was clicked.")
-            time.sleep(2)
-        except NoSuchElementException:
-            pass
     
-    def fill_email_input(self, email):
-        el = self.find_element_by_id('com.ajaxsystems:id/authLoginEmail')
-        el.clear()
-        self.fill_input(el, email)
-        logger.info("\"Email\" field was filled.")
+    def fill_email_input(self, email: str):
+        el = self.driver.find_element_by_id('com.ajaxsystems:id/authLoginEmail')
 
-    def fill_password_input(self, password):
-        el = self.find_element_by_id('com.ajaxsystems:id/authLoginPassword')
         el.clear()
-        self.fill_input(el, password)
-        logger.info("\"Password\" field was filled.")
+        el.send_keys(email)
+
+        logger.info(f"\"Email\" field with \"{email}\" value was filled.")
+
+    def fill_password_input(self, password: str):
+        el = self.driver.find_element_by_id('com.ajaxsystems:id/authLoginPassword')
+
+        el.clear()
+        el.send_keys(password)
+
+        logger.info(f"\"Password\" field with \"{password}\" was filled.")
 
     def login(self):
-        el = self.find_element_by_xpath('//android.widget.TextView[@resource-id="com.ajaxsystems:id/text" and @text="Log In"]')
-        self.click_element(el)
-        logger.info("Log in to account.")
+        el = self.driver.find_element_by_xpath('//android.widget.TextView[@resource-id="com.ajaxsystems:id/text" and @text="Log In"]')
+        el.click()
 
-    def full_login_into_account(self):
+    def full_login_into_account(self, email: str, password: str):
         logger.info("Start log in to account.")
+
         self.click_on_login_button()
-        self.fill_email_input("qa.ajax.app.automation@gmail.com")
-        self.fill_password_input("qa_automation_password")
+        self.fill_email_input(email)
+        self.fill_password_input(password)
         self.login()
+
         logger.info("Log in was successful.")
-        time.sleep(3)
+
+    def sign_out(self):
+        logger.info("Start to sign out of account.")
+
+        menu = self.driver.find_element_by_id("com.ajaxsystems:id/menuDrawer")
+        menu.click()
+
+        settings = self.driver.find_element_by_id("com.ajaxsystems:id/settings")
+        settings.click()
+
+        sign_out = self.driver.find_element_by_xpath('(//androidx.compose.ui.platform.ComposeView[@resource-id="com.ajaxsystems:id/compose_view"])[6]/android.view.View/android.view.View[1]')
+        sign_out.click()
+
+        logger.info("Sign out was successful.")
+
+    def click_menu_button(self):
+        # If user doesn't see the menu button, it will skip it
+        try:
+            menu = self.wait_for_element_by_id('com.ajaxsystems:id/menuDrawer')
+            menu.click()
+            logger.info("\"Menu\" button was clicked.")
+        except NoSuchElementException:
+            pass
